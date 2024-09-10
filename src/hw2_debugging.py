@@ -1,7 +1,7 @@
 """
 Module for implementing of Merge Sort Algorithm
 """
-import rand
+from src import rand
 
 
 def merge_sort(input_arr):
