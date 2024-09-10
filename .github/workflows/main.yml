@@ -1,0 +1,98 @@
+name: CI Workflow
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest pytest-cov pylint radon autopep8
+
+    # Step to run pylint for linting
+    - name: Run pylint for linting
+      run: |
+        pylint src/**/*.py
+      # Runs pylint for linting
+
+    # Step to run radon for cyclomatic complexity analysis
+    - name: Run radon for cyclomatic complexity
+      run: |
+        radon cc src -a
+      # Runs radon for cyclomatic complexity analysis
+
+    # Step to run radon for maintainability index analysis
+    - name: Run radon for maintainability index
+      run: |
+        radon mi src
+      # Runs radon for maintainability index analysis
+
+    # Step to run radon for radon metrics analysis
+    - name: Run radon for metrics analysis
+      run: |
+        radon raw src
+      # Runs radon for radon metrics analysis
+
+    # Step to run pytest and generate coverage report
+    - name: Run tests and generate coverage report
+      run: |
+        pytest --cov=. --cov-report=xml --cov-report=term
+      # Runs tests and generates coverage report
+
+    # Step to upload coverage report to Codecov
+    - name: Upload coverage report to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: ./coverage.xml
+        flags: unittests
+        name: codecov-coverage
+        fail_ci_if_error: true
+
+    # Step to run autopep8 to format code
+    - name: autopep8
+      run: |
+        autopep8 --recursive --in-place --aggressive --aggressive .
+      # Runs autopep8 to format the code with aggressive PEP8 fixes
+
+    # Step to commit changes after autopep8
+    - name: Commit changes if autopep8 made changes
+      run: |
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "GitHub Actions"
+        git diff --exit-code || git commit -am "autopep8 action fixes"
+        git push origin HEAD:autopep8-patches
+      continue-on-error: true
+      # Commits and pushes the changes to a new branch `autopep8-patches` if autopep8 made any changes
+
+    # Step to create pull request using GitHub Actions
+    - name: Create Pull Request
+      uses: actions/github-script@v6
+      if: success() && github.event_name == 'push'
+      with:
+        script: |
+          const { data: pullRequest } = await github.pulls.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: "Fixes by autopep8 action",
+            head: "autopep8-patches",
+            base: "main",
+            body: "This is an auto-generated PR with fixes by autopep8.",
+            labels: ["autopep8", "automated pr"],
+            draft: false
+          });
+          console.log(`Created pull request: ${pullRequest.html_url}`);
