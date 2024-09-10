@@ -1,0 +1,41 @@
+Running Radon metrics for the src directory...
+
+Cyclomatic Complexity:
+src/rand.py
+    F 8:0 random_array - A
+src/hw2_debugging.py
+    F 24:0 recombine - A
+    F 7:0 merge_sort - A
+
+3 blocks (classes, functions, methods) analyzed.
+Average complexity: A (2.6666666666666665)
+
+Maintainability Index:
+src/rand.py - A
+src/hw2_debugging.py - A
+
+Raw Metrics:
+src/rand.py
+    LOC: 24
+    LLOC: 8
+    SLOC: 8
+    Comments: 1
+    Single comments: 1
+    Multi: 10
+    Blank: 5
+    - Comment Stats
+        (C % L): 4%
+        (C % S): 12%
+        (C + M % L): 46%
+src/hw2_debugging.py
+    LOC: 59
+    LLOC: 29
+    SLOC: 23
+    Comments: 3
+    Single comments: 3
+    Multi: 18
+    Blank: 15
+    - Comment Stats
+        (C % L): 5%
+        (C % S): 13%
+        (C + M % L): 36%
