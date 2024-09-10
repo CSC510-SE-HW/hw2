@@ -26,7 +26,7 @@ jobs:
     # Step to run pylint for linting
     - name: Run pylint for linting
       run: |
-        pylint src/**/*.py
+        PYTHONPATH=./src pylint src/hw2_debugging.py
       # Runs pylint for linting
 
     # Step to run radon for cyclomatic complexity analysis
@@ -50,7 +50,7 @@ jobs:
     # Step to run pytest and generate coverage report
     - name: Run tests and generate coverage report
       run: |
-        pytest --cov=. --cov-report=xml --cov-report=term
+        PYTHONPATH=./src pytest --cov=. --cov-report=xml --cov-report=term
       # Runs tests and generates coverage report
 
     # Step to upload coverage report to Codecov
