@@ -16,7 +16,8 @@ def random_array(arr):
         list: The input array filled with random integers.
     """
     for i, _ in enumerate(arr):
-        # Using subprocess to run the 'shuf' command and generate a random number
+        # Using subprocess to run the 'shuf' command and generate a random
+        # number
         shuffled_num = subprocess.run(
             ["shuf", "-i1-20", "-n1"], capture_output=True, check=True
         )
