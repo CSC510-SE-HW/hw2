@@ -69,32 +69,26 @@ jobs:
         autopep8 --recursive --in-place --aggressive --aggressive .
       # Runs autopep8 to format the code with aggressive PEP8 fixes
 
-    # Step to commit changes after autopep8
+    # Step to commit changes after autopep8 if there are any changes
     - name: Commit changes if autopep8 made changes
       run: |
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git config --global user.name "GitHub Actions"
-        git diff --exit-code || git commit -am "autopep8 action fixes"
-        git push origin HEAD:autopep8-patches
+        git diff --exit-code || (git checkout -b autopep8-patches && git commit -am "autopep8 action fixes" && git push origin autopep8-patches)
       continue-on-error: true
-      # Commits and pushes the changes to a new branch `autopep8-patches` if autopep8 made any changes
 
-    # Step to create pull request using GitHub Actions
+    # Step to create a pull request if there are changes and a new branch was pushed
     - name: Create Pull Request
+      if: success() && steps.Commit_changes_if_autopep8_made_changes.outcome == 'success'
       uses: actions/github-script@v6
-      if: success() && github.event_name == 'push'
       with:
         script: |
-          const { data: pullRequest } = await github.rest.pulls.create({
+          github.rest.pulls.create({
             owner: context.repo.owner,
             repo: context.repo.repo,
             title: "Fixes by autopep8 action",
             head: "autopep8-patches",
             base: "main",
             body: "This is an auto-generated PR with fixes by autopep8.",
-            labels: ["autopep8", "automated pr"],
-            draft: false
+            labels: ["autopep8", "automated pr"]
           });
-          console.log(`Created pull request: ${pullRequest.html_url}`);
-    
-    
