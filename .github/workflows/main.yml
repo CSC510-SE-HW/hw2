@@ -85,7 +85,7 @@ jobs:
       if: success() && github.event_name == 'push'
       with:
         script: |
-          const { data: pullRequest } = await github.pulls.create({
+          const { data: pullRequest } = await github.rest.pulls.create({
             owner: context.repo.owner,
             repo: context.repo.repo,
             title: "Fixes by autopep8 action",
@@ -96,3 +96,5 @@ jobs:
             draft: false
           });
           console.log(`Created pull request: ${pullRequest.html_url}`);
+    
+    
