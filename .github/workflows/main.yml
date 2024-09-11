@@ -30,13 +30,11 @@ jobs:
     # Step to run pylint for linting and save the output to a text file
     - name: Run pylint for linting
       run: |
-        set -e
         PYTHONPATH=./src pylint src/hw2_debugging.py | tee post_traces/pylint_post_trace.txt
 
     # Step to run Radon for metrics and format the output
     - name: Run Radon and format the output
       run: |
-        set -e
         echo "Running Radon metrics for the src directory..." > post_traces/radon_post_trace.txt
 
         # Cyclomatic Complexity
@@ -54,14 +52,20 @@ jobs:
     # Step to run autopep8 to format code and save output
     - name: Run autopep8 to format code and save output
       run: |
-        set -e
         autopep8 --recursive --in-place --aggressive --aggressive . | tee post_traces/autopep8_post_trace.txt
+
+    # Commit and push the post_traces folder if there are changes
+    - name: Commit and push post_traces folder
+      run: |
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "GitHub Actions"
+        git add post_traces
+        git diff --cached --exit-code || git commit -m "Add post_traces logs"
+        git push origin HEAD
 
     # Step to commit changes after autopep8 if there are any changes
     - name: Commit changes if autopep8 made changes
       run: |
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git config --global user.name "GitHub Actions"
         git diff --exit-code || (git checkout -b autopep8-patches && git commit -am "autopep8 action fixes" && git push origin autopep8-patches)
       continue-on-error: true
 
