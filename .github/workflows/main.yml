@@ -38,15 +38,15 @@ jobs:
         echo "Running Radon metrics for the src directory..." > post_traces/radon_post_trace.txt
 
         # Cyclomatic Complexity
-        echo "\nCyclomatic Complexity:" >> post_traces/radon_post_trace.txt
+        echo -e "\nCyclomatic Complexity:" >> post_traces/radon_post_trace.txt
         radon cc src -a >> post_traces/radon_post_trace.txt
 
         # Maintainability Index
-        echo "\nMaintainability Index:" >> post_traces/radon_post_trace.txt
+        echo -e "\nMaintainability Index:" >> post_traces/radon_post_trace.txt
         radon mi src >> post_traces/radon_post_trace.txt
 
         # Raw Metrics
-        echo "\nRaw Metrics:" >> post_traces/radon_post_trace.txt
+        echo -e "\nRaw Metrics:" >> post_traces/radon_post_trace.txt
         radon raw src >> post_traces/radon_post_trace.txt
 
     # Step to run autopep8 to format code and save output
