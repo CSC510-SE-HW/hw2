@@ -16,3 +16,7 @@
 ![Pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)
 ![Radon Complexity](https://img.shields.io/badge/code%20complexity-radon%20A-brightgreen)
 ![PEP8](https://img.shields.io/badge/code%20style-autopep8-blue)
+
+
+This repository illustrates how to apply static analysis tools in order to create a cleaner and more readable coding format. All the badges show the essential information about the repository and how the test cases pass correctly after debugging a code that is not working.
+Other than the tests that will be run after each commit, the static analysis tools will also check the new code. Moreover, the traces of how these different tools analyzed the code are also shown here, both before and after modifying the code accordingly. Having all the test cases and ensuring they run after each commit makes the repository more maintainable, and analyzing the code after each commit using the static analysis tools will ensure that the code follows specific coding patterns.
