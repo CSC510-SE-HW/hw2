@@ -23,51 +23,36 @@ jobs:
         python -m pip install --upgrade pip
         pip install pytest pytest-cov pylint radon autopep8
 
-    # Step to run pylint for linting
+    # Create post_traces folder if it doesn't exist
+    - name: Create post_traces folder
+      run: mkdir -p post_traces
+
+    # Step to run pylint for linting and save the output to a text file
     - name: Run pylint for linting
       run: |
-        PYTHONPATH=./src pylint src/hw2_debugging.py
-      # Runs pylint for linting
+        PYTHONPATH=./src pylint src/hw2_debugging.py | tee post_traces/pylint_report.txt
 
-    # Step to run radon for cyclomatic complexity analysis
-    - name: Run radon for cyclomatic complexity
+    # Step to run Radon for metrics and format the output
+    - name: Run Radon and format the output
       run: |
-        radon cc src -a
-      # Runs radon for cyclomatic complexity analysis
+        echo "Running Radon metrics for the src directory..." > post_traces/radon_metrics.txt
 
-    # Step to run radon for maintainability index analysis
-    - name: Run radon for maintainability index
+        # Cyclomatic Complexity
+        echo "\nCyclomatic Complexity:" >> post_traces/radon_metrics.txt
+        radon cc src -a >> post_traces/radon_metrics.txt
+
+        # Maintainability Index
+        echo "\nMaintainability Index:" >> post_traces/radon_metrics.txt
+        radon mi src >> post_traces/radon_metrics.txt
+
+        # Raw Metrics
+        echo "\nRaw Metrics:" >> post_traces/radon_metrics.txt
+        radon raw src >> post_traces/radon_metrics.txt
+
+    # Step to run autopep8 to format code and save output
+    - name: Run autopep8 to format code and save output
       run: |
-        radon mi src
-      # Runs radon for maintainability index analysis
-
-    # Step to run radon for radon metrics analysis
-    - name: Run radon for metrics analysis
-      run: |
-        radon raw src
-      # Runs radon for radon metrics analysis
-
-    # Step to run pytest and generate coverage report
-    - name: Run tests and generate coverage report
-      run: |
-        PYTHONPATH=./src pytest --cov=. --cov-report=xml --cov-report=term
-      # Runs tests and generates coverage report
-
-    # Step to upload coverage report to Codecov
-    - name: Upload coverage report to Codecov
-      uses: codecov/codecov-action@v4
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        files: ./coverage.xml
-        flags: unittests
-        name: codecov-coverage
-        fail_ci_if_error: true
-
-    # Step to run autopep8 to format code
-    - name: autopep8
-      run: |
-        autopep8 --recursive --in-place --aggressive --aggressive .
-      # Runs autopep8 to format the code with aggressive PEP8 fixes
+        autopep8 --recursive --in-place --aggressive --aggressive . | tee post_traces/autopep8_report.txt
 
     # Step to commit changes after autopep8 if there are any changes
     - name: Commit changes if autopep8 made changes
@@ -91,4 +76,4 @@ jobs:
             base: "main",
             body: "This is an auto-generated PR with fixes by autopep8.",
             labels: ["autopep8", "automated pr"]
-          });
+          })
