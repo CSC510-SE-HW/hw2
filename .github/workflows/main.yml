@@ -31,6 +31,7 @@ jobs:
     - name: Run pylint for linting
       run: |
         PYTHONPATH=./src pylint src/hw2_debugging.py | tee post_traces/pylint_post_trace.txt
+        if [ ! -s post_traces/pylint_post_trace.txt ]; then echo "No trace output generated" > post_traces/pylint_post_trace.txt; fi
 
     # Step to run Radon for metrics and format the output
     - name: Run Radon and format the output
@@ -49,10 +50,14 @@ jobs:
         echo -e "\nRaw Metrics:" >> post_traces/radon_post_trace.txt
         radon raw src >> post_traces/radon_post_trace.txt
 
+        # Check if the Radon file has content, otherwise write "No trace output generated"
+        if [ ! -s post_traces/radon_post_trace.txt ]; then echo "No trace output generated" > post_traces/radon_post_trace.txt; fi
+
     # Step to run autopep8 to format code and save output
     - name: Run autopep8 to format code and save output
       run: |
         autopep8 --recursive --in-place --aggressive --aggressive . | tee post_traces/autopep8_post_trace.txt
+        if [ ! -s post_traces/autopep8_post_trace.txt ]; then echo "No trace output generated" > post_traces/autopep8_post_trace.txt; fi
 
     # Commit and push the post_traces folder if there are changes
     - name: Commit and push post_traces folder
