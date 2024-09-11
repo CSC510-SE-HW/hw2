@@ -23,36 +23,39 @@ jobs:
         python -m pip install --upgrade pip
         pip install pytest pytest-cov pylint radon autopep8
 
-    # Create post_traces folder if it doesn't exist
+    # Ensure the post_traces folder is created first
     - name: Create post_traces folder
       run: mkdir -p post_traces
 
     # Step to run pylint for linting and save the output to a text file
     - name: Run pylint for linting
       run: |
-        PYTHONPATH=./src pylint src/hw2_debugging.py | tee post_traces/pylint_report.txt
+        set -e
+        PYTHONPATH=./src pylint src/hw2_debugging.py | tee post_traces/pylint_post_trace.txt
 
     # Step to run Radon for metrics and format the output
     - name: Run Radon and format the output
       run: |
-        echo "Running Radon metrics for the src directory..." > post_traces/radon_metrics.txt
+        set -e
+        echo "Running Radon metrics for the src directory..." > post_traces/radon_post_trace.txt
 
         # Cyclomatic Complexity
-        echo "\nCyclomatic Complexity:" >> post_traces/radon_metrics.txt
-        radon cc src -a >> post_traces/radon_metrics.txt
+        echo "\nCyclomatic Complexity:" >> post_traces/radon_post_trace.txt
+        radon cc src -a >> post_traces/radon_post_trace.txt
 
         # Maintainability Index
-        echo "\nMaintainability Index:" >> post_traces/radon_metrics.txt
-        radon mi src >> post_traces/radon_metrics.txt
+        echo "\nMaintainability Index:" >> post_traces/radon_post_trace.txt
+        radon mi src >> post_traces/radon_post_trace.txt
 
         # Raw Metrics
-        echo "\nRaw Metrics:" >> post_traces/radon_metrics.txt
-        radon raw src >> post_traces/radon_metrics.txt
+        echo "\nRaw Metrics:" >> post_traces/radon_post_trace.txt
+        radon raw src >> post_traces/radon_post_trace.txt
 
     # Step to run autopep8 to format code and save output
     - name: Run autopep8 to format code and save output
       run: |
-        autopep8 --recursive --in-place --aggressive --aggressive . | tee post_traces/autopep8_report.txt
+        set -e
+        autopep8 --recursive --in-place --aggressive --aggressive . | tee post_traces/autopep8_post_trace.txt
 
     # Step to commit changes after autopep8 if there are any changes
     - name: Commit changes if autopep8 made changes
