@@ -23,10 +23,10 @@ Other than the tests that will be run after each commit, the static analysis too
 
 
 1. **`.github/workflows/main.yml`**
-   - The `main.yml` file in this repository triggers on push and pull requests, setting up Python 3.x, running tests with `pytest`, generating a coverage report, and uploading it to Codecov for the `hw1` project.
+   - The `main.yml` file in this repository triggers on push and pull requests, setting up Python 3.x, running tests with `pytest`, generating a coverage report, and uploading it to Codecov for the `hw2` project.
 
 2. **`LICENSE`**
-   - This MIT License allows users to freely use, modify, and distribute the `CSC510-SE-HW1` software, provided they include the original copyright notice. 
+   - This MIT License allows users to freely use, modify, and distribute the `CSC510-SE-HW` software, provided they include the original copyright notice. 
 
 3. **`README.md`**
    - This file provides an overview of the project. It includes badges that display the build status, license, and code coverage.
@@ -34,7 +34,7 @@ Other than the tests that will be run after each commit, the static analysis too
 4. **`scripts/run_radon_metrics.sh`**
    - This script folder runs `run_radon_metrics.sh`, which generates a log file after running radon in order to show the traces of this static analysis tool.
 5. **`src`**
-   - This folder contains the original codes for the merge sort function, including hw2_debugging.py and rand.py.
+   - This folder contains the original codes for the merge sort function, including `hw2_debugging.py` and `rand.py`.
 6. **`traces`**
    - This folder has all the generated traces both before and after modification. The only important thing to pay attention to is that radon analyzes and gives information about the code's complexity, comments, and similar factors, which do not usually change after modifying the code according to the other tools.
 8. **`test_sort.py`**
