@@ -13,3 +13,6 @@
 ![Open issues](https://img.shields.io/github/issues-raw/CSC510-SE-HW/hw2)
 [![Commit Acitivity](https://img.shields.io/github/commit-activity/m/CSC510-SE-HW/hw2)](https://github.com/CSC510-SE-HW/hw2)
 [![Codecov](https://codecov.io/gh/CSC510-SE-HW/hw2/branch/main/graph/badge.svg)](https://codecov.io/gh/CSC510-SE-HW/hw2)
+![Pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)
+![Radon Complexity](https://img.shields.io/badge/code%20complexity-radon%20A-brightgreen)
+![PEP8](https://img.shields.io/badge/code%20style-autopep8-blue)
