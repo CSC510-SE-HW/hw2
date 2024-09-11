@@ -1,3 +1,7 @@
+"""
+Test the merge sort algorithm using pytest
+"""
+
 import pytest
 from src.hw2_debugging import merge_sort
 
