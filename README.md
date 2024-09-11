@@ -37,5 +37,7 @@ Other than the tests that will be run after each commit, the static analysis too
    - This folder contains the original codes for the merge sort function, including `hw2_debugging.py` and `rand.py`.
 6. **`traces`**
    - This folder has all the generated traces both before and after modification. The only important thing to pay attention to is that radon analyzes and gives information about the code's complexity, comments, and similar factors, which do not usually change after modifying the code according to the other tools.
+7. **`post_traces`**
+   - The post-trace text files are generated in this folder after configuring the workflow. The main difference between this folder and the `traces` folder is that one includes all the pre and post-trace files before adding the workflow, and the other is set after setting the workflow.
 8. **`test_sort.py`**
    - This test file uses `pytest` to verify the functionality of the merge sort function, with three different passing tests trying to cover various input arrays and see if there is any problem with the algorithm.
