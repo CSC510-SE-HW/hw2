@@ -13,9 +13,9 @@
 ![Open issues](https://img.shields.io/github/issues-raw/CSC510-SE-HW/hw2)
 [![Commit Acitivity](https://img.shields.io/github/commit-activity/m/CSC510-SE-HW/hw2)](https://github.com/CSC510-SE-HW/hw2)
 [![Codecov](https://codecov.io/gh/CSC510-SE-HW/hw2/branch/main/graph/badge.svg)](https://codecov.io/gh/CSC510-SE-HW/hw2)
-[![Pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/CSC510-SE-HW/hw2/blob/main/logs/pylint_post_trace.log)
-[![Radon Complexity](https://img.shields.io/badge/code%20complexity-radon%20A-brightgreen)](https://github.com/CSC510-SE-HW/hw2/blob/main/logs/radon_post_trace.log)
-[![PEP8](https://img.shields.io/badge/code%20style-autopep8-blue)](https://github.com/CSC510-SE-HW/hw2/blob/main/logs/autopep8_post_trace.log)
+[![Pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/CSC510-SE-HW/hw2/blob/main/post_traces/pylint_post_trace.txt)
+[![Radon Complexity](https://img.shields.io/badge/code%20complexity-radon%20A-brightgreen)](https://github.com/CSC510-SE-HW/hw2/blob/main/post_traces/radon_post_trace.txt)
+[![PEP8](https://img.shields.io/badge/code%20style-autopep8-blue)](https://github.com/CSC510-SE-HW/hw2/blob/main/post_traces/autopep8_post_trace.txt)
 
 
 This repository illustrates how to apply static analysis tools in order to create a cleaner and more readable coding format. All the badges show the essential information about the repository and how the test cases pass correctly after debugging a code that is not working.
