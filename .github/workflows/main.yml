@@ -31,7 +31,9 @@ jobs:
     - name: Run pylint for linting
       run: |
         PYTHONPATH=./src pylint src/hw2_debugging.py | tee post_traces/pylint_post_trace.txt
-        if [ ! -s post_traces/pylint_post_trace.txt ]; then echo "No trace output generated" > post_traces/pylint_post_trace.txt; fi
+        if [ ! -s post_traces/pylint_post_trace.txt ] || ! grep -q '[^[:space:]]' post_traces/pylint_post_trace.txt; then 
+            echo "No trace output generated" > post_traces/pylint_post_trace.txt; 
+        fi
 
     # Step to run Pyflakes and save the output to a text file
     - name: Run Pyflakes and save output
