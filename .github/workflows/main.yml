@@ -37,8 +37,10 @@ jobs:
     - name: Run Pyflakes and save output
       run: |
         pyflakes src/*.py | tee post_traces/pyflakes_post_trace.txt
-        if [ ! -s post_traces/pyflakes_post_trace.txt ]; then echo "No trace output generated" > post_traces/pyflakes_post_trace.txt; fi
-    
+        if [ ! -s post_traces/pyflakes_post_trace.txt ] || ! grep -q '[^[:space:]]' post_traces/pyflakes_post_trace.txt; then 
+            echo "No trace output generated" > post_traces/pyflakes_post_trace.txt; 
+        fi
+            
     # Step to run Radon for metrics and format the output
     - name: Run Radon and format the output
       run: |
