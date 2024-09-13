@@ -59,14 +59,16 @@ jobs:
         radon raw src >> post_traces/radon_post_trace.txt
 
         # Check if the Radon file has content, otherwise write "No trace output generated"
-        if [ ! -s post_traces/radon_post_trace.txt ]; then echo "No trace output generated" > post_traces/radon_post_trace.txt; fi
-
+        if [ ! -s post_traces/radon_post_trace.txt ] || ! grep -q '[^[:space:]]' post_traces/radon_post_trace.txt; then 
+            echo "No trace output generated" > post_traces/radon_post_trace.txt; 
+        fi
     # Step to run autopep8 to format code and save output
     - name: Run autopep8 to format code and save output
       run: |
         autopep8 --recursive --in-place --aggressive --aggressive . | tee post_traces/autopep8_post_trace.txt
-        if [ ! -s post_traces/autopep8_post_trace.txt ]; then echo "No trace output generated" > post_traces/autopep8_post_trace.txt; fi
-
+        if [ ! -s post_traces/autopep8_post_trace.txt ] || ! grep -q '[^[:space:]]' post_traces/autopep8_post_trace.txt; then 
+            echo "No trace output generated" > post_traces/autopep8_post_trace.txt; 
+        fi
     # Commit and push the post_traces folder if there are changes
     - name: Commit and push post_traces folder
       run: |
