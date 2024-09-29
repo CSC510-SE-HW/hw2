@@ -27,6 +27,14 @@ jobs:
     - name: Create post_traces folder
       run: mkdir -p post_traces
 
+    # Step to run tests using pytest and save the results
+    - name: Run pytest and generate coverage report
+      run: |
+        pytest --cov=src --cov-report=xml:post_traces/coverage.xml --cov-report=term | tee post_traces/pytest_output.txt
+        if [ ! -s post_traces/pytest_output.txt ] || ! grep -q '[^[:space:]]' post_traces/pytest_output.txt; then 
+            echo "No trace output generated" > post_traces/pytest_output.txt; 
+        fi
+
     # Step to run pylint for linting and save the output to a text file
     - name: Run pylint for linting
       run: |
