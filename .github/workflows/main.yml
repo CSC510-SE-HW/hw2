@@ -30,9 +30,9 @@ jobs:
     # Step to run tests using pytest and save the results
     - name: Run pytest and generate coverage report
       run: |
-        PYTHONPATH=./src pytest --cov=src --cov-report=xml:coverage.xml --cov-report=term | tee pytest_output.txt
-        if [ ! -s pytest_output.txt ] || ! grep -q '[^[:space:]]' pytest_output.txt; then 
-            echo "No trace output generated" > pytest_output.txt; 
+        PYTHONPATH=./src pytest --cov=src --cov-report=xml:post_traces/coverage.xml --cov-report=term | tee post_traces/pytest_output.txt
+        if [ ! -s post_traces/pytest_output.txt ] || ! grep -q '[^[:space:]]' post_traces/pytest_output.txt; then 
+            echo "No trace output generated" > post_traces/pytest_output.txt; 
         fi
 
     # Step to run pylint for linting and save the output to a text file
